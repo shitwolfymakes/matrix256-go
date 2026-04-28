@@ -1,0 +1,39 @@
+name: conformance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  fixtures:
+    name: Tier-1 fixtures (${{ matrix.os }}, go ${{ matrix.go }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go: ["1.25"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out matrix256-go
+        uses: actions/checkout@v4
+        with:
+          path: matrix256-go
+
+      - name: Check out matrix256 spec repo
+        uses: actions/checkout@v4
+        with:
+          repository: shitwolfymakes/matrix256
+          path: matrix256
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+          cache: true
+          cache-dependency-path: matrix256-go/go.sum
+
+      - name: Run synthetic fixture suite
+        working-directory: matrix256-go
+        run: go test ./tests/ -v

@@ -1,0 +1,65 @@
+# golangci-lint config that enforces the library-discipline rules
+# documented in README.md. Library code lives at the module root and
+# under v1/; the tests/ runner is exempt from rules that conflict with
+# script-style code (panics on programmer error, fmt.Print* progress
+# output, unchecked rmDir cleanup, etc.).
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - revive
+    - forbidigo
+    - gosec
+    - unused
+  settings:
+    revive:
+      rules:
+        # Documentation: every exported item carries a // doc comment.
+        - name: exported
+    forbidigo:
+      analyze-types: true
+      forbid:
+        - pattern: '^panic$'
+          msg: "Library code must not panic; return an error instead."
+        - pattern: '^os\.Exit$'
+          msg: "Library code must not call os.Exit; return an error."
+        - pattern: '^log\.(Fatal|Fatalf|Fatalln|Panic|Panicf|Panicln)$'
+          msg: "Library code must not log-and-exit; return an error."
+        - pattern: '^fmt\.(Print|Printf|Println)$'
+          msg: "Library code must not write to stdout."
+        - pattern: '^println$'
+          msg: "Use of builtin println is forbidden in library code."
+        - pattern: '^print$'
+          msg: "Use of builtin print is forbidden in library code."
+    errcheck:
+      exclude-functions:
+        # bytes.Buffer write methods are documented to never error.
+        - (*bytes.Buffer).Write
+        - (*bytes.Buffer).WriteByte
+        - (*bytes.Buffer).WriteString
+        # hash.Hash.Write is documented to never error.
+        - (hash.Hash).Write
+  exclusions:
+    rules:
+      # The tests/ directory is a CLI script that uses fmt.Print* for
+      # progress output and os.Exit for exit codes — both forbidden in
+      # library code. Exempt those linters here.
+      - path: tests/
+        linters:
+          - forbidigo
+          - errcheck
+          - revive
+          - gosec
+      - path: _test\.go
+        linters:
+          - forbidigo
+          - errcheck
+          - revive
+          - gosec
