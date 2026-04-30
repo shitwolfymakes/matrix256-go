@@ -1,3 +1,6 @@
+// Copyright 2026 wolfy <wolfy@shitwolfymakes.com>
+// SPDX-License-Identifier: Apache-2.0
+
 // Package v1 implements matrix256v1 — a SHA-256 fingerprint over the
 // (path, size) records of every regular file under a rooted filesystem
 // tree. The walk and serialization logic here must stay in lockstep with

@@ -1,3 +1,6 @@
+// Copyright 2026 wolfy <wolfy@shitwolfymakes.com>
+// SPDX-License-Identifier: Apache-2.0
+
 // Package matrix256 — reproducible fingerprints for optical discs and
 // filesystem trees.
 //

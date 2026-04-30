@@ -2,8 +2,6 @@
 
 Go reference implementation of [**matrix256v1**](https://github.com/shitwolfymakes/matrix256) — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree.
 
-**Private repository.** Not published as a Go module. The GitHub remote (when added) must be configured private as well; consumers cannot `go get` this module today.
-
 ## Dependencies
 
 One runtime dependency. Otherwise pure Go on the standard library:
@@ -97,3 +95,7 @@ The fixture builders mirror the construction logic of the Python and JavaScript 
 - `IMPLEMENTERS.md` — practical guidance (encoding, mount handling, bridge discs)
 - `CORPUS.md` — known-good digests across real discs
 - `CONFORMANCE_FIXTURES.md` / `conformance_fixtures.json` — Tier-1 synthetic fixture suite
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE). Apache 2.0 grants explicit patent rights and includes a patent-retaliation clause that terminates those rights for anyone who sues over patent infringement in the Work.
