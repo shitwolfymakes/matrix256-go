@@ -1,0 +1,31 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    name: Validate tag and warm module proxy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Warm proxy.golang.org
+        run: |
+          # Triggers the public Go module proxy to fetch this version from
+          # GitHub. Once this returns 200 the tag is reachable for `go get`.
+          curl -fsS "https://proxy.golang.org/github.com/shitwolfymakes/matrix256-go/@v/${GITHUB_REF_NAME}.info"
+
+      - name: Nudge pkg.go.dev
+        run: |
+          # Best-effort: pkg.go.dev indexes lazily on first request.
+          # Failure here is not fatal; the proxy warm above is what matters.
+          curl -fsS "https://pkg.go.dev/fetch/github.com/shitwolfymakes/matrix256-go@${GITHUB_REF_NAME}" || true
