@@ -1,5 +1,11 @@
 # matrix256-go
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/shitwolfymakes/matrix256-go.svg)](https://pkg.go.dev/github.com/shitwolfymakes/matrix256-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/shitwolfymakes/matrix256-go)](https://goreportcard.com/report/github.com/shitwolfymakes/matrix256-go)
+[![conformance](https://github.com/shitwolfymakes/matrix256-go/actions/workflows/conformance.yml/badge.svg)](https://github.com/shitwolfymakes/matrix256-go/actions/workflows/conformance.yml)
+[![lint](https://github.com/shitwolfymakes/matrix256-go/actions/workflows/lint.yml/badge.svg)](https://github.com/shitwolfymakes/matrix256-go/actions/workflows/lint.yml)
+
 Go reference implementation of [**matrix256v1**](https://github.com/shitwolfymakes/matrix256) — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree.
 
 ## Dependencies
