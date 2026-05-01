@@ -15,8 +15,10 @@ jobs:
         with:
           go-version: stable
 
-      - name: Run tests
-        run: go test ./...
+      # Tests are not run here. The conformance suite needs the spec repo
+      # (matrix256) checked out as a sibling for conformance_fixtures.json,
+      # which conformance.yml does and runs on every push to main. By the
+      # time a tag exists, that gate has already passed.
 
       - name: Warm proxy.golang.org
         run: |
